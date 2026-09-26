@@ -1,0 +1,230 @@
+# CUSTOMER SUPPORT TICKETING SYSTEM (SAAS HELPDESK)
+
+A production-grade, multi-tier Customer Support Helpdesk platform designed for academic evaluation and enterprise SaaS helpdesk operations. It bridges natural language machine learning classification with graph-theoretic ticket escalation and relational database normalization.
+
+---
+
+## 1. Problem Statement
+In traditional helpdesk platforms, tickets often exist as disconnected entities lacking structured links to customers, agents, specialized department teams, categories, or escalation history. Consequently:
+- Frontline agents spend manual effort reading and categorizing tickets.
+- Misrouted tickets bounce across teams, leading to severe SLA breaches.
+- Escalation paths are ad-hoc rather than routed through validated organizational hierarchies.
+
+### The Solution:
+Our system enforces a strictly connected relational lifecycle:
+$$\text{Customer} \longrightarrow \text{Ticket} \overset{\text{Python NLP}}{\longrightarrow} \text{Category} \overset{\text{Java Routing}}{\longrightarrow} \text{Team/Agent} \longrightarrow \text{Responses} \overset{\text{ADSA Graph}}{\longrightarrow} \text{Escalation History} \longrightarrow \text{Resolution}$$
+
+---
+
+## 2. Academic Subject Mapping
+
+| Academic Subject | Topic Covered | Implementation Location |
+| :--- | :--- | :--- |
+| **DBMS** | ER Modeling, 3NF/BCNF Normalization, Indexes, Constraints, Relational Schema | `/database/schema/01_schema.sql`, `/docs/ER-Diagram.md`, `/docs/Relational-Schema.md` |
+| **DMGT** | Relational Algebra ($\sigma, \pi, \bowtie, \cup, \cap, -, \mathcal{G}$), Tuple Relational Calculus (TRC) | `/docs/Relational-Algebra.md` |
+| **ADSA** | Directed Weighted Graph, Adjacency List, Breadth-First Search (BFS), Depth-First Search (DFS), Cycle Detection | `/backend/src/main/java/com/supportdesk/ticketing/graph/`, `/docs/Escalation-Graph.md` |
+| **OOPJ** | Encapsulation, Polymorphism, Abstraction, Inheritance, SOLID, Repository & DTO Patterns | `/backend/src/main/java/com/supportdesk/ticketing/`, `/docs/OOP-Concepts.md` |
+| **Python / ML** | Text Preprocessing, TF-IDF Vectorization, Logistic Regression, Multi-class Inference, FastAPI | `/classifier/`, `/classifier/main.py`, `/classifier/classifier/predictor.py` |
+
+---
+
+## 3. Technology Stack
+
+- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS, Lucide Icons
+- **Backend**: Java 17, Spring Boot 3.3.4, Spring Data JPA, Spring Security, JJWT, Spring WebClient
+- **Machine Learning**: Python 3.11, FastAPI, scikit-learn (TF-IDF + Multinomial Logistic Regression), NumPy
+- **Database**: PostgreSQL 16 (Normalized to 3NF/BCNF with foreign key constraints, checks, indexes)
+- **Containerization**: Docker, Docker Compose
+
+---
+
+## 4. Monorepo Project Structure
+
+```
+customer-support-ticketing/
+│
+├── frontend/ (or root running app)
+│   ├── src/
+│   │   ├── components/       # SaaS Helpdesk UI, Ticket Timeline, Graph Explorer
+│   │   ├── data/             # Relational seed data and mock state
+│   │   ├── services/         # API integration layer with fallback
+│   │   ├── App.tsx           # Main application shell with role switcher
+│   │   └── index.css         # Tailwind CSS entrypoint
+│   └── package.json
+│
+├── backend/
+│   ├── pom.xml               # Maven configuration
+│   ├── src/main/java/com/supportdesk/ticketing/
+│   │   ├── controllers/      # REST API endpoints (Auth, Tickets, Escalations)
+│   │   ├── services/         # TicketService, RoutingService, EscalationService
+│   │   ├── repositories/     # Spring Data JPA repositories
+│   │   ├── entities/         # Normalized entities (Ticket, Customer, Agent, etc.)
+│   │   ├── dto/              # Request / Response Data Transfer Objects
+│   │   ├── security/         # JWT filter, Provider, BCrypt, SecurityConfig
+│   │   ├── graph/            # AdjacencyListGraph, BFS/DFS traversal, Cycle check
+│   │   └── config/           # CORS, WebClient, DataInitializer
+│   ├── src/test/java/        # JUnit 5 & Mockito test suites
+│   └── Dockerfile
+│
+├── classifier/
+│   ├── requirements.txt      # Python dependencies
+│   ├── main.py               # FastAPI application with /predict and /health
+│   ├── model/dataset.py      # 140+ real-world support ticket training examples
+│   ├── classifier/predictor.py # TF-IDF + Logistic Regression inference
+│   ├── training/train.py     # Evaluation & cross-validation trainer
+│   ├── test_classifier.py    # Pytest unit tests
+│   └── Dockerfile
+│
+├── database/
+│   ├── schema/01_schema.sql  # PostgreSQL DDL with 14 tables and indexes
+│   ├── seed/02_seed_data.sql # 10 customers, 8 agents, 5 teams, 20+ tickets
+│   └── documentation/        # Data dictionary and constraints
+│
+├── docs/
+│   ├── ER-Diagram.md         # Mermaid ER diagram and cardinalities
+│   ├── Relational-Schema.md  # Formal relations and BCNF normalization proofs
+│   ├── Relational-Algebra.md # Selection, Projection, Natural Joins, Set Ops
+│   ├── Escalation-Graph.md   # Graph theory, Adjacency List, BFS vs DFS
+│   ├── OOP-Concepts.md       # Java OOP, Design Patterns, SOLID principles
+│   ├── API-Documentation.md  # Complete REST API reference with JSON payloads
+│   └── Project-Architecture.md # Component communication & Sequence diagrams
+│
+├── docker-compose.yml        # Orchestration for PostgreSQL, Classifier, Backend, Frontend
+├── .env.example              # Environment variables template
+└── README.md
+```
+
+---
+
+## 5. Demo Credentials
+
+| Role | Email | Password | Assigned Organization / Team |
+| :--- | :--- | :--- | :--- |
+| **Admin** | `admin@supportdesk.io` | `Password123!` | System Administrator |
+| **Agent (Billing)** | `sarah.chen@supportdesk.io` | `Password123!` | Billing & Finance Team (Tier 1) |
+| **Agent (Tech)** | `elena.rodriguez@supportdesk.io` | `Password123!` | Technical Support Team (Tier 1) |
+| **Agent (Senior)** | `david.kim@supportdesk.io` | `Password123!` | Technical Engineering (Tier 3) |
+| **Customer** | `john.doe@acme.com` | `Password123!` | Acme Corporation |
+| **Customer** | `alice.smith@globex.corp` | `Password123!` | Globex Industries |
+
+---
+
+## 6. Official Demonstration Flow for Judges / Faculty
+
+### Step 1: Login as Customer
+- Select or log in as **Customer: John Doe (Acme Corporation)**.
+
+### Step 2: Create a Ticket
+- Submit the test prompt:
+  - **Subject**: `"Payment deducted twice"`
+  - **Description**: `"I purchased a product but my account was charged two times on my credit card."`
+
+### Step 3: Automated Machine Learning Classification
+- The backend submits the text to the **Python FastAPI Microservice**.
+- The classifier tokenizes the text, calculates **TF-IDF n-grams**, and executes **Logistic Regression**.
+- Predicted Category: `BILLING` (Confidence: `96.2%`).
+
+### Step 4: Automated Routing
+- Java `RoutingService` inspects the category mapping:
+  $$\text{BILLING} \implies \text{Billing \& Finance Team}$$
+- Assigns ticket to available agent **Sarah Chen**.
+
+### Step 5: Agent Triage
+- Switch role to **Agent: Sarah Chen**.
+- Open ticket `TKT-2026-0021`.
+- View customer description, reply with billing verification note, and add internal notes.
+
+### Step 6: Graph-Based Escalation
+- Click **"Escalate Ticket"**.
+- Select target level: `BILLING_SPECIALIST` or `SENIOR_ENGINEER`.
+- The **AdjacencyListGraph** calculates the shortest route via **BFS**:
+  $$\text{L1\_SUPPORT} \longrightarrow \text{L2\_SUPPORT} \longrightarrow \text{TECHNICAL\_TEAM} \longrightarrow \text{SENIOR\_ENGINEER}$$
+- The path is validated and recorded in PostgreSQL table `ticket_escalations`.
+- Ticket status updates to `ESCALATED`.
+
+### Step 7: Admin Dashboard & Analytics
+- Switch role to **Admin: Alex Morgan**.
+- Review updated real-time KPI metrics, tickets by category, team workloads, audit logs, and interactive graph explorer.
+
+---
+
+## 7. How to Run with Docker Compose
+
+Ensure Docker and Docker Compose are installed.
+
+```bash
+# 1. Clone repository
+git clone https://github.com/your-username/customer-support-ticketing.git
+cd customer-support-ticketing
+
+# 2. Setup environment variables
+cp .env.example .env
+
+# 3. Build and launch all 4 microservices
+docker compose up --build
+```
+
+Access points:
+- **Frontend Dashboard**: `http://localhost:3000`
+- **Spring Boot REST API**: `http://localhost:8080/api`
+- **Python Classifier API Docs**: `http://localhost:8000/docs`
+- **PostgreSQL Database**: `localhost:5432` (`customer_support_db`)
+
+---
+
+## 8. Running Services Locally Without Docker
+
+### Prerequisites
+- JDK 17+ and Maven 3.9+
+- Python 3.10+
+- Node.js 18+ and npm
+- PostgreSQL 16 running on port 5432
+
+### 1. Database
+```bash
+psql -U postgres -c "CREATE DATABASE customer_support_db;"
+psql -U postgres -d customer_support_db -f database/schema/01_schema.sql
+psql -U postgres -d customer_support_db -f database/seed/02_seed_data.sql
+```
+
+### 2. Python Classifier
+```bash
+cd classifier
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+```
+
+### 3. Java Spring Boot Backend
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+### 4. React Frontend
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## 9. Testing & Quality Verification
+
+### Run Java Backend Tests
+```bash
+cd backend
+mvn test
+```
+Tests verified:
+- `EscalationGraphTest`: BFS shortest path, DFS traversal, and cycle detection.
+- `RoutingServiceTest`: Team assignment logic for categories.
+
+### Run Python Classifier Tests
+```bash
+cd classifier
+pytest test_classifier.py
+python training/train.py
+```
+Outputs cross-validation accuracy and inference scores on test prompts.

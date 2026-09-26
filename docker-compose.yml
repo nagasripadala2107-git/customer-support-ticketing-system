@@ -1,0 +1,90 @@
+services:
+  # 1. Relational Database Service (PostgreSQL 16)
+  postgres:
+    image: postgres:16-alpine
+    container_name: supportdesk-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-customer_support_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/schema/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./database/seed/02_seed_data.sql:/docker-entrypoint-initdb.d/02_seed_data.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d customer_support_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - supportdesk-net
+
+  # 2. Python AI Classifier Service (FastAPI + scikit-learn)
+  classifier:
+    build:
+      context: ./classifier
+      dockerfile: Dockerfile
+    container_name: supportdesk-classifier
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    networks:
+      - supportdesk-net
+
+  # 3. Java Spring Boot Application Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: supportdesk-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      classifier:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-customer_support_db}
+      DATABASE_USERNAME: ${POSTGRES_USER:-postgres}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      CLASSIFIER_SERVICE_URL: http://classifier:8000
+      JWT_SECRET: ${JWT_SECRET:-dGhpcy1pcy1hLXNlY3VyZS0yNTYtYml0LXNlY3JldC1rZXktZm9yLXRpY2tldGluZy1hcHA=}
+    networks:
+      - supportdesk-net
+
+  # 4. React Frontend (Vite + Tailwind CSS)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: supportdesk-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_BASE_URL: ${FRONTEND_API_URL:-http://localhost:8080/api}
+      VITE_CLASSIFIER_URL: ${FRONTEND_CLASSIFIER_URL:-http://localhost:8000}
+    networks:
+      - supportdesk-net
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  supportdesk-net:
+    driver: bridge

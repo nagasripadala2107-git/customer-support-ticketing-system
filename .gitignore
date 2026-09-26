@@ -1,0 +1,35 @@
+# Node / Frontend
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env
+.env.local
+!.env.example
+
+# Java / Spring Boot / Maven
+target/
+*.class
+*.jar
+*.war
+.idea/
+*.iml
+.project
+.settings/
+
+# Python / FastAPI
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.pytest_cache/
+
+# Database / PostgreSQL
+pgdata/
+*.sqlite3

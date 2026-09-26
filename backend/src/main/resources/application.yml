@@ -1,0 +1,39 @@
+server:
+  port: ${PORT:8080}
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: customer-support-ticketing
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/customer_support_db}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+
+# Microservice integrations
+classifier:
+  service:
+    url: ${CLASSIFIER_SERVICE_URL:http://localhost:8000}
+    connect-timeout-ms: 3000
+    read-timeout-ms: 5000
+
+# Security & JWT Token Configuration
+security:
+  jwt:
+    secret: ${JWT_SECRET:dGhpcy1pcy1hLXNlY3VyZS0yNTYtYml0LXNlY3JldC1rZXktZm9yLXRpY2tldGluZy1hcHA=}
+    expiration-ms: 86400000 # 24 hours
+
+logging:
+  level:
+    com.supportdesk.ticketing: INFO
+    org.springframework.security: WARN
