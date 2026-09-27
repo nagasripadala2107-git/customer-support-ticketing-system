@@ -39,57 +39,74 @@ $$\text{Customer} \longrightarrow \text{Ticket} \overset{\text{Python NLP}}{\lon
 ---
 
 ## 4. Monorepo Project Structure
+## 📁 Project Structure
+
+```text
 customer-support-ticketing/
 │
-├── frontend/ (or root running app)
+├── src/                         # React + TypeScript frontend
+│   ├── components/              # UI components
+│   ├── data/                    # Application data
+│   ├── services/                # API integration
+│   ├── App.tsx                  # Main application
+│   └── index.css                # Global styling
+│
+├── backend/                     # Java + Spring Boot backend
+│   ├── pom.xml
 │   ├── src/
-│   │   ├── components/       # SaaS Helpdesk UI, Ticket Timeline, Graph Explorer
-│   │   ├── data/             # Relational seed data and mock state
-│   │   ├── services/         # API integration layer with fallback
-│   │   ├── App.tsx           # Main application shell with role switcher
-│   │   └── index.css         # Tailwind CSS entrypoint
-│   └── package.json
-│
-├── backend/
-│   ├── pom.xml               # Maven configuration
-│   ├── src/main/java/com/supportdesk/ticketing/
-│   │   ├── controllers/      # REST API endpoints (Auth, Tickets, Escalations)
-│   │   ├── services/         # TicketService, RoutingService, EscalationService
-│   │   ├── repositories/     # Spring Data JPA repositories
-│   │   ├── entities/         # Normalized entities (Ticket, Customer, Agent, etc.)
-│   │   ├── dto/              # Request / Response Data Transfer Objects
-│   │   ├── security/         # JWT filter, Provider, BCrypt, SecurityConfig
-│   │   ├── graph/            # AdjacencyListGraph, BFS/DFS traversal, Cycle check
-│   │   └── config/           # CORS, WebClient, DataInitializer
-│   ├── src/test/java/        # JUnit 5 & Mockito test suites
+│   │   └── main/
+│   │       └── java/
+│   │           └── com/
+│   │               └── supportdesk/
+│   │                   └── ticketing/
+│   │                       ├── controllers/
+│   │                       ├── services/
+│   │                       ├── repositories/
+│   │                       ├── entities/
+│   │                       ├── dto/
+│   │                       ├── security/
+│   │                       ├── graph/
+│   │                       └── config/
+│   │
+│   ├── test/                   # Backend tests
 │   └── Dockerfile
 │
-├── classifier/
-│   ├── requirements.txt      # Python dependencies
-│   ├── main.py               # FastAPI application with /predict and /health
-│   ├── model/dataset.py      # 140+ real-world support ticket training examples
-│   ├── classifier/predictor.py # TF-IDF + Logistic Regression inference
-│   ├── training/train.py     # Evaluation & cross-validation trainer
-│   ├── test_classifier.py    # Pytest unit tests
+├── classifier/                 # Python + FastAPI ML service
+│   ├── requirements.txt
+│   ├── main.py
+│   ├── model/
+│   │   └── dataset.py
+│   ├── classifier/
+│   │   └── predictor.py
+│   ├── training/
+│   │   └── train.py
+│   ├── test_classifier.py
 │   └── Dockerfile
 │
-├── database/
-│   ├── schema/01_schema.sql  # PostgreSQL DDL with 14 tables and indexes
-│   ├── seed/02_seed_data.sql # 10 customers, 8 agents, 5 teams, 20+ tickets
-│   └── documentation/        # Data dictionary and constraints
+├── database/                   # PostgreSQL database
+│   ├── schema/
+│   ├── seed/
+│   └── documentation/
 │
-├── docs/
-│   ├── ER-Diagram.md         # Mermaid ER diagram and cardinalities
-│   ├── Relational-Schema.md  # Formal relations and BCNF normalization proofs
-│   ├── Relational-Algebra.md # Selection, Projection, Natural Joins, Set Ops
-│   ├── Escalation-Graph.md   # Graph theory, Adjacency List, BFS vs DFS
-│   ├── OOP-Concepts.md       # Java OOP, Design Patterns, SOLID principles
-│   ├── API-Documentation.md  # Complete REST API reference with JSON payloads
-│   └── Project-Architecture.md # Component communication & Sequence diagrams
+├── docs/                       # Academic & technical documentation
+│   ├── ER-Diagram.md
+│   ├── Relational-Schema.md
+│   ├── Relational-Algebra.md
+│   ├── Escalation-Graph.md
+│   ├── OOP-Concepts.md
+│   ├── API-Documentation.md
+│   └── Project-Architecture.md
 │
-├── docker-compose.yml        # Orchestration for PostgreSQL, Classifier, Backend, Frontend
-├── .env.example              # Environment variables template
+├── docker-compose.yml          # Multi-service Docker configuration
+├── .env.example                # Environment variables template
+├── .gitignore
+├── index.html                  # Vite entry point
+├── metadata.json
+├── package.json                # Frontend dependencies
+├── package-lock.json
+├── tsconfig.json
 └── README.md
+```
 
 
 ## 5. Demo Credentials
