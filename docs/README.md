@@ -8,6 +8,7 @@ Welcome to the comprehensive documentation index for the **Customer Support Tick
 
 | Document | Focus Area | Description |
 | :--- | :--- | :--- |
+| **[Complete Team & Reviewer Guide](file:///c:/Users/prasanna/Downloads/customer-support-ticketing-system/docs/Team-And-Reviewer-Guide.md)** | **Master Team Guide** | **Pin-to-pin guide covering every tab, slide, role, and workflow in simple words (ready for PDF export).** |
 | **[Project Architecture](file:///c:/Users/prasanna/Downloads/customer-support-ticketing-system/docs/Project-Architecture.md)** | System Design | 4-tier microservices architecture, network topology, and UML sequence diagrams. |
 | **[REST API Reference](file:///c:/Users/prasanna/Downloads/customer-support-ticketing-system/docs/API-Documentation.md)** | API & Endpoints | Complete endpoint catalog (Auth, Tickets, Escalations, ML inference) with JSON payloads. |
 | **[ER Diagram](file:///c:/Users/prasanna/Downloads/customer-support-ticketing-system/docs/ER-Diagram.md)** | Database Design | Entity-Relationship diagram in Mermaid with entity attributes and cardinalities. |
