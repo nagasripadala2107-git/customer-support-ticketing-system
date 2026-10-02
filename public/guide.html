@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Support Ticketing System - Complete Project & Team Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --bg-page: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --accent: #0284c7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background-color: var(--bg-page);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+      padding: 40px 32px;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 12px 8px;
+      }
+      .container {
+        padding: 24px 16px;
+        border-radius: 12px;
+      }
+    }
+
+    .actions-bar {
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .header-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 20px;
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #334155;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+
+    p, li {
+      font-size: 13.5px;
+      color: #334155;
+      margin-bottom: 10px;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .callout {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 12.5px;
+      display: block;
+      overflow-x: auto;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #1e293b;
+      white-space: nowrap;
+    }
+
+    tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #0f172a;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-green { background: #d1fae5; color: #065f46; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-purple { background: #ede9fe; color: #5b21b6; }
+    .badge-rose { background: #ffe4e6; color: #9f1239; }
+
+    .step-box {
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .step-title {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: #0f172a;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .step-number {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #ffffff;
+      }
+      .container {
+        border: none;
+        box-shadow: none;
+        max-width: 100%;
+        padding: 0;
+      }
+      .actions-bar {
+        display: none !important;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="actions-bar">
+    <button onclick="window.print()" class="btn btn-primary">
+      🖨️ Download / Print PDF
+    </button>
+  </div>
+
+  <div class="container">
+    <div class="header-badge">Complete Project &amp; Team Guide</div>
+    <h1>Customer Support Ticketing System (SaaS Helpdesk)</h1>
+    <div class="subtitle">
+      Comprehensive Pin-to-Pin Evaluation Manual for Team Members, Evaluators, and Faculty
+    </div>
+
+    <div class="callout">
+      <strong>Quick Architecture Summary:</strong> 
+      A full-stack, 4-tier Monorepo combining React 19 Frontend, Java 17 Spring Boot 3.3 Backend, Python 3.11 FastAPI NLP Classifier (TF-IDF + Logistic Regression), and PostgreSQL 16 (14 BCNF Tables) with Graph-based BFS Escalation Routing.
+    </div>
+
+    <h2>1. 👥 User Roles &amp; Demo Credentials</h2>
+    <p>All demo accounts share the password: <code>Password123!</code></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Account Email</th>
+          <th>Team / Scope</th>
+          <th>Escalation Node</th>
+          <th>Key Privileges</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Customer</strong></td>
+          <td><code>john.doe@acme.com</code></td>
+          <td>Acme Corporation</td>
+          <td><span class="badge badge-blue">Client</span></td>
+          <td>Submit tickets, view own history, customer replies</td>
+        </tr>
+        <tr>
+          <td><strong>Agent (Tech L1)</strong></td>
+          <td><code>elena.rodriguez@supportdesk.io</code></td>
+          <td>Technical Support</td>
+          <td><span class="badge badge-green">L1_SUPPORT</span></td>
+          <td>Initial diagnostics, agent replies, internal notes</td>
+        </tr>
+        <tr>
+          <td><strong>Agent (Billing Lead)</strong></td>
+          <td><code>sarah.chen@supportdesk.io</code></td>
+          <td>Billing &amp; Finance</td>
+          <td><span class="badge badge-amber">BILLING_SPECIALIST</span></td>
+          <td>Financial triage, invoice corrections, refunds</td>
+        </tr>
+        <tr>
+          <td><strong>Agent (Tech Lead)</strong></td>
+          <td><code>lucas.muller@supportdesk.io</code></td>
+          <td>Technical Support</td>
+          <td><span class="badge badge-blue">TECHNICAL_TEAM</span></td>
+          <td>Code defect triage, patch reviews</td>
+        </tr>
+        <tr>
+          <td><strong>Agent (Senior Arch)</strong></td>
+          <td><code>david.kim@supportdesk.io</code></td>
+          <td>Technical Support</td>
+          <td><span class="badge badge-purple">SENIOR_ENGINEER</span></td>
+          <td>Infrastructure faults, kernel &amp; scale failures</td>
+        </tr>
+        <tr>
+          <td><strong>Admin</strong></td>
+          <td><code>admin@supportdesk.io</code></td>
+          <td>Executive Operations</td>
+          <td><span class="badge badge-rose">EXECUTIVE_LEAD</span></td>
+          <td>Global system oversight, team directory, audit trail</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h2>2. 📱 Dashboard &amp; Mobile KPI Carousel</h2>
+    <p>The operational center of the helpdesk provides real-time visibility into tickets and SLA compliance.</p>
+    <ul>
+      <li><strong>6 KPI Cards (Mobile Swipe Carousel)</strong>: Total Tickets, Open Queue, In Progress, Escalated, Resolved, and Average SLA Response (<code>4.2h</code> vs <code>&lt; 8.0h</code> target). On mobile, swipes horizontally with 6 active slide indicator dots.</li>
+      <li><strong>Ticket Status &amp; Lifecycle Donut Graph</strong>: Multi-color SVG ring chart showing proportions of Open, In Progress, Waiting Customer, Escalated, Resolved, and Closed tickets with dynamic center stats.</li>
+      <li><strong>1-Click Status Filtering</strong>: Tapping any status bar or donut slice filters the tickets table instantly.</li>
+      <li><strong>Mobile Navigation Drawer</strong>: Fixed 256px sidebar slides in cleanly on mobile via the top hamburger button (<code>☰</code>) with background blur.</li>
+    </ul>
+
+    <h2>3. 🔀 Escalation Graph Architecture (ADSA Graph Theory)</h2>
+    <p>Ticket escalation is modeled as a <strong>Directed Acyclic Graph (DAG)</strong>: <code>G = (V, E, W)</code> using an in-memory <strong>Adjacency List</strong> (<code>Θ(|V| + |E|) = 12</code> references).</p>
+    
+    <pre>
+L1_SUPPORT ────────► L2_SUPPORT ────────► TECHNICAL_TEAM ────────► SENIOR_ENGINEER
+    │                                                                   │
+    ▼                                                                   ▼
+BILLING_SPECIALIST ───────────────────────────────────────────────► EXECUTIVE_LEAD
+    </pre>
+
+    <ul>
+      <li><strong>BFS Shortest Path Routing (<code>O(|V| + |E|)</code>)</strong>: Computes the minimum-hop route from current tier to destination tier.</li>
+      <li><strong>DFS Tri-Color Cycle Prevention</strong>: Confirms no backward cycles exist (<code>WHITE</code>, <code>GRAY</code>, <code>BLACK</code> states), guaranteeing the network is a strict DAG.</li>
+      <li><strong>Reviewer Scenarios</strong>:
+        <br>• <em>Scenario 1 (Tech Outage)</em>: <code>L1 ➔ L2 ➔ Tech ➔ Senior</code> (3 hops, weight=6, Agent: David Kim).
+        <br>• <em>Scenario 2 (Billing Dispute)</em>: <code>L1 ➔ Billing ➔ Executive</code> (2 hops, weight=3, Agent: Alex Morgan).
+      </li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2>4. 🧠 NLP Classifier Lab (Machine Learning)</h2>
+    <p>Automated ticket categorization microservice running Python 3.11 and FastAPI:</p>
+    <ul>
+      <li><strong>Text Vectorization</strong>: Uses <strong>TF-IDF</strong> (Term Frequency–Inverse Document Frequency) with unigram and bigram n-grams.</li>
+      <li><strong>Classification Algorithm</strong>: <strong>Multinomial Logistic Regression</strong> with L2 regularization.</li>
+      <li><strong>7 Target Categories</strong>: <code>BILLING</code>, <code>TECHNICAL_SUPPORT</code>, <code>ACCOUNT_ACCESS</code>, <code>SHIPPING</code>, <code>REFUND</code>, <code>PRODUCT_ISSUE</code>, and <code>GENERAL_INQUIRY</code>.</li>
+      <li><strong>Interactive Sandbox</strong>: Reviewers can type any message in the <em>NLP Classifier Lab</em> tab and see real-time probability bars and automated team assignment.</li>
+    </ul>
+
+    <h2>5. 📐 Relational Algebra Query Engine (DBMS &amp; DMGT)</h2>
+    <p>Academic visualizer illustrating mathematical querying over PostgreSQL:</p>
+    <ul>
+      <li><strong>σ (Selection)</strong>: Row filtering (<code>σ_{status='OPEN'}(TICKETS)</code>).</li>
+      <li><strong>π (Projection)</strong>: Column selection (<code>π_{ticket_number, subject}(TICKETS)</code>).</li>
+      <li><strong>⋈ (Natural Join)</strong>: Relational joining (<code>TICKETS ⋈_{customer_id} CUSTOMERS</code>).</li>
+      <li><strong>∪, ∩, - (Set Operations)</strong>: Union, Intersection, and Set Difference.</li>
+      <li>Side-by-side view showing the mathematical formula, Tuple Relational Calculus (TRC), and live generated SQL query.</li>
+    </ul>
+
+    <h2>6. 📂 Monorepo Codebase Browser</h2>
+    <p>An in-app code inspector allowing reviewers to review production code directly in the browser:</p>
+    <ul>
+      <li><strong>Backend</strong>: Java 17 Spring Boot (Security, Routing, Graph BFS algorithms).</li>
+      <li><strong>Classifier</strong>: Python 3.11 FastAPI (Model training, predictor, endpoints).</li>
+      <li><strong>Database</strong>: PostgreSQL 16 (14 BCNF tables, foreign keys, triggers, audit schema).</li>
+    </ul>
+
+    <h2>7. 🧪 Official 9-Step Reviewer Evaluation Walkthrough</h2>
+    <p>Step-by-step evaluation flow for faculty, judges, and reviewers:</p>
+
+    <div class="step-box">
+      <div class="step-title"><span class="step-number">1</span> Login as Customer</div>
+      <p>Use the top-right role switcher to select <strong>Customer: John Doe (Acme Corp)</strong>.</p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-title"><span class="step-number">2</span> Create Test Ticket</div>
+      <p>Click "Create New Ticket", then click the preset: <em>"Payment deducted twice"</em>.</p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-title"><span class="step-number">3</span> Verify Python ML Classification</div>
+      <p>Observe the AI predict Category = <code>BILLING</code> with ~<code>96.2%</code> confidence.</p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-title"><span class="step-number">4</span> Verify Automated Java Routing</div>
+      <p>Click Submit. The backend assigns the ticket to <strong>Billing &amp; Finance Team</strong> (Sarah Chen).</p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-title"><span class="step-number">5</span> Switch Role to Agent: Sarah Chen</div>
+      <p>Switch role to Sarah Chen. Open the newly created ticket in the queue.</p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-title"><span class="step-number">6</span> Agent Response &amp; Internal Note</div>
+      <p>Add a customer reply and a private internal note. Observe status change to <code>IN_PROGRESS</code>.</p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-title"><span class="step-number">7</span> Escalate Ticket via Graph BFS</div>
+      <p>Click "Escalate Ticket" ➔ choose destination <code>SENIOR_ENGINEER</code>. The graph computes the BFS route: <code>L1 ➔ L2 ➔ Tech ➔ Senior</code>.</p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-title"><span class="step-number">8</span> Verify Escalation Audit Record</div>
+      <p>The escalation is committed to PostgreSQL <code>ticket_escalations</code> table, and status becomes <code>ESCALATED</code>.</p>
+    </div>
+
+    <div class="step-box">
+      <div class="step-title"><span class="step-number">9</span> Admin Dashboard &amp; Analytics</div>
+      <p>Switch to <strong>Admin: Alex Morgan</strong> to view the real-time Status Donut Chart, Escalation Graph Explorer, and Relational Algebra Query Engine.</p>
+    </div>
+
+  </div>
+
+</body>
+</html>

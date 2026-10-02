@@ -240,6 +240,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Mobile Quick Action Buttons */}
         <div className="md:hidden px-4 py-2 border-t border-slate-800/60 space-y-1">
+          <a
+            href="/guide.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-xs font-semibold text-blue-400 hover:bg-slate-800 hover:text-blue-300 bg-slate-800/40 border border-blue-500/20"
+          >
+            <FileText className="w-4 h-4 text-blue-400" />
+            <span>Open Team PDF Guide</span>
+          </a>
+
           {onOpenDemoGuide && (
             <button
               onClick={() => {
