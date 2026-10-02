@@ -33,3 +33,6 @@ ENV/
 # Database / PostgreSQL
 pgdata/
 *.sqlite3
+
+# Duplicate nested clone
+customer-support-ticketing-system/

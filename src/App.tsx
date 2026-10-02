@@ -23,6 +23,7 @@ export default function App() {
   const [selectedTicketId, setSelectedTicketId] = useState<number | null>(null);
   const [showNewTicketModal, setShowNewTicketModal] = useState<boolean>(false);
   const [showDemoGuide, setShowDemoGuide] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   // Sync state with database
   const [tickets, setTickets] = useState(() => db.getTickets());
@@ -123,10 +124,12 @@ export default function App() {
         onMarkNotificationRead={handleMarkNotificationRead}
         onOpenDemoGuide={() => setShowDemoGuide(true)}
         onResetDatabase={handleResetDatabase}
+        isMobileMenuOpen={mobileMenuOpen}
+        onToggleMobileMenu={() => setMobileMenuOpen((prev) => !prev)}
       />
 
       {/* Main Body with Sidebar + Viewport */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative">
         <Sidebar
           currentTab={currentTab}
           onSelectTab={(tab) => {
@@ -139,9 +142,13 @@ export default function App() {
           }}
           userRole={currentUser.role}
           ticketCount={tickets.filter((t) => t.status !== 'CLOSED').length}
+          isOpenMobile={mobileMenuOpen}
+          onCloseMobile={() => setMobileMenuOpen(false)}
+          onOpenDemoGuide={() => setShowDemoGuide(true)}
+          onResetDatabase={handleResetDatabase}
         />
 
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto min-w-0 w-full">
           {currentTab === 'dashboard' && (
             <DashboardView
               currentUser={currentUser}

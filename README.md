@@ -109,16 +109,32 @@ customer-support-ticketing/
 ```
 
 
-## 5. Demo Credentials
+## 5. Demo Credentials & Complete Agent Roster
 
-| Role | Email | Password | Assigned Organization / Team |
+All demo accounts share the password: `Password123!`
+
+### Support Agents & Administrative Leadership
+
+| Agent Name | Email | Role | Department Team | Tier Level | Escalation Graph Node | Max Tickets |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Alex Morgan** | `admin@supportdesk.io` | `ROLE_ADMIN` | Executive Operations | Operations Director | `EXECUTIVE_LEAD` | Unlimited |
+| **Sarah Chen** | `sarah.chen@supportdesk.io` | `ROLE_AGENT` | Billing & Finance | Tier 1 (Lead) | `BILLING_SPECIALIST` | 10 |
+| **Marcus Vance** | `marcus.vance@supportdesk.io` | `ROLE_AGENT` | Billing & Finance | Tier 2 | `L2_SUPPORT` | 8 |
+| **Elena Rodriguez** | `elena.rodriguez@supportdesk.io` | `ROLE_AGENT` | Technical Support | Tier 1 (Frontline) | `L1_SUPPORT` | 10 |
+| **David Kim** | `david.kim@supportdesk.io` | `ROLE_AGENT` | Technical Support | Tier 3 (Architect) | `SENIOR_ENGINEER` | 6 |
+| **Priya Patel** | `priya.patel@supportdesk.io` | `ROLE_AGENT` | Account & Security | Tier 1 | `L1_SUPPORT` | 12 |
+| **James Wilson** | `james.wilson@supportdesk.io` | `ROLE_AGENT` | Shipping & Logistics | Tier 1 | `L1_SUPPORT` | 10 |
+| **Ananya Rao** | `ananya.rao@supportdesk.io` | `ROLE_AGENT` | Product Engineering | Tier 2 | `L2_SUPPORT` | 8 |
+| **Lucas Muller** | `lucas.muller@supportdesk.io` | `ROLE_AGENT` | Technical Support | Lead Engineer | `TECHNICAL_TEAM` | 5 |
+
+### Customer Accounts
+
+| Customer Name | Email | Company | SLA Account Tier |
 | :--- | :--- | :--- | :--- |
-| **Admin** | `admin@supportdesk.io` | `Password123!` | System Administrator |
-| **Agent (Billing)** | `sarah.chen@supportdesk.io` | `Password123!` | Billing & Finance Team (Tier 1) |
-| **Agent (Tech)** | `elena.rodriguez@supportdesk.io` | `Password123!` | Technical Support Team (Tier 1) |
-| **Agent (Senior)** | `david.kim@supportdesk.io` | `Password123!` | Technical Engineering (Tier 3) |
-| **Customer** | `john.doe@acme.com` | `Password123!` | Acme Corporation |
-| **Customer** | `alice.smith@globex.corp` | `Password123!` | Globex Industries |
+| **John Doe** | `john.doe@acme.com` | Acme Corporation | Enterprise ($SLA < 4h$) |
+| **Alice Smith** | `alice.smith@globex.corp` | Globex Industries | Pro ($SLA < 8h$) |
+| **Robert Taylor** | `robert.taylor@initech.io` | Initech Solutions | Standard ($SLA < 24h$) |
+| **Emily Watson** | `emily.watson@hooli.com` | Hooli Media | Enterprise ($SLA < 4h$) |
 
 ---
 

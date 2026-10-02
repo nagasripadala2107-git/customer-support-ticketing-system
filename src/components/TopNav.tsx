@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { User, NotificationItem } from '../types';
-import { Bell, CheckCircle2, BookOpen, RotateCcw, ShieldCheck } from 'lucide-react';
+import { Bell, CheckCircle2, BookOpen, RotateCcw, ShieldCheck, Menu, X } from 'lucide-react';
 
 interface TopNavProps {
   currentUser: User;
@@ -10,6 +10,8 @@ interface TopNavProps {
   onMarkNotificationRead: (id: number) => void;
   onOpenDemoGuide: () => void;
   onResetDatabase: () => void;
+  onToggleMobileMenu?: () => void;
+  isMobileMenuOpen?: boolean;
 }
 
 export const TopNav: React.FC<TopNavProps> = ({
@@ -20,6 +22,8 @@ export const TopNav: React.FC<TopNavProps> = ({
   onMarkNotificationRead,
   onOpenDemoGuide,
   onResetDatabase,
+  onToggleMobileMenu,
+  isMobileMenuOpen,
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
@@ -27,25 +31,35 @@ export const TopNav: React.FC<TopNavProps> = ({
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   const keyRoles = [
-    { label: 'Customer: John Doe (Acme Corp)', email: 'john.doe@acme.com', role: 'CUSTOMER' },
-    { label: 'Agent: Sarah Chen (Billing Team)', email: 'sarah.chen@supportdesk.io', role: 'AGENT' },
-    { label: 'Agent: Elena Rodriguez (Tech L1)', email: 'elena.rodriguez@supportdesk.io', role: 'AGENT' },
-    { label: 'Agent: David Kim (Senior Tech)', email: 'david.kim@supportdesk.io', role: 'AGENT' },
-    { label: 'Admin: Alex Morgan (System Admin)', email: 'admin@supportdesk.io', role: 'ADMIN' },
+    { label: 'Customer: John Doe (Acme Corp)', email: 'john.doe@acme.com', role: 'CUSTOMER', tierBadge: 'Enterprise SLA' },
+    { label: 'Agent: Elena Rodriguez (Tech L1)', email: 'elena.rodriguez@supportdesk.io', role: 'AGENT', tierBadge: 'L1_SUPPORT' },
+    { label: 'Agent: Sarah Chen (Billing Lead)', email: 'sarah.chen@supportdesk.io', role: 'AGENT', tierBadge: 'BILLING_SPECIALIST' },
+    { label: 'Agent: Marcus Vance (Billing T2)', email: 'marcus.vance@supportdesk.io', role: 'AGENT', tierBadge: 'L2_SUPPORT' },
+    { label: 'Agent: Lucas Muller (Tech Lead)', email: 'lucas.muller@supportdesk.io', role: 'AGENT', tierBadge: 'TECHNICAL_TEAM' },
+    { label: 'Agent: David Kim (Senior Tech)', email: 'david.kim@supportdesk.io', role: 'AGENT', tierBadge: 'SENIOR_ENGINEER' },
+    { label: 'Admin: Alex Morgan (System Admin)', email: 'admin@supportdesk.io', role: 'ADMIN', tierBadge: 'EXECUTIVE_LEAD' },
   ];
 
   return (
-    <header className="h-14 border-b border-slate-200 bg-white sticky top-0 z-40 px-6 flex items-center justify-between">
-      {/* Zone 1: Wordmark Brand */}
-      <div className="flex items-center gap-3">
-        <a href="#dashboard" className="text-base font-semibold tracking-tight text-slate-900 flex items-center gap-2">
-          <div className="w-6 h-6 rounded bg-slate-900 text-white flex items-center justify-center font-bold text-xs">
+    <header className="h-14 border-b border-slate-200 bg-white sticky top-0 z-40 px-3 sm:px-6 flex items-center justify-between">
+      {/* Zone 1: Wordmark Brand & Mobile Hamburger */}
+      <div className="flex items-center gap-2 sm:gap-3">
+        <button
+          onClick={onToggleMobileMenu}
+          className="md:hidden p-1.5 -ml-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
+          aria-label="Toggle navigation menu"
+        >
+          {isMobileMenuOpen ? <X className="w-5 h-5 text-slate-700" /> : <Menu className="w-5 h-5 text-slate-700" />}
+        </button>
+
+        <a href="#dashboard" className="text-sm sm:text-base font-semibold tracking-tight text-slate-900 flex items-center gap-2">
+          <div className="w-6 h-6 rounded bg-slate-900 text-white flex items-center justify-center font-bold text-xs shrink-0">
             H
           </div>
-          <span>Helpdesk SaaS</span>
+          <span className="truncate">Helpdesk SaaS</span>
         </a>
         <span className="hidden sm:inline text-xs text-slate-400">·</span>
-        <span className="hidden sm:inline text-xs font-medium text-slate-500">Customer Support Ticketing System</span>
+        <span className="hidden lg:inline text-xs font-medium text-slate-500">Customer Support Ticketing System</span>
       </div>
 
       {/* Zone 2: Navigation / Quick Action Links */}
@@ -137,11 +151,11 @@ export const TopNav: React.FC<TopNavProps> = ({
           </button>
 
           {showRoleSwitcher && (
-            <div className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50">
+            <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-slate-200 py-2 z-50">
               <div className="px-3 py-1.5 border-b border-slate-100 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                 Switch Interactive Demo Role
               </div>
-              <div className="divide-y divide-slate-50">
+              <div className="divide-y divide-slate-50 max-h-80 overflow-y-auto">
                 {keyRoles.map((item) => {
                   const u = allUsers.find((user) => user.email === item.email);
                   if (!u) return null;
@@ -159,7 +173,12 @@ export const TopNav: React.FC<TopNavProps> = ({
                     >
                       <div>
                         <div className="font-medium text-slate-900">{item.label}</div>
-                        <div className="text-[11px] text-slate-400 font-mono">{item.email}</div>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className="text-[10px] text-slate-400 font-mono">{item.email}</span>
+                          <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                            {item.tierBadge}
+                          </span>
+                        </div>
                       </div>
                       {isCurrent && <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />}
                     </button>
