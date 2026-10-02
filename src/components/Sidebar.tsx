@@ -19,6 +19,7 @@ export type NavTab =
   | 'dashboard' 
   | 'tickets' 
   | 'new_ticket' 
+  | 'team_guide'
   | 'escalation_graph' 
   | 'ml_classifier' 
   | 'relational_algebra' 
@@ -64,6 +65,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
       label: 'Create Ticket',
       icon: PlusCircle,
       highlight: true,
+    },
+    {
+      id: 'team_guide' as NavTab,
+      label: 'Team & Reviewer Guide',
+      icon: FileText,
+      badgeText: 'PDF',
     },
   ];
 
@@ -176,6 +183,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     }`}
                   >
                     {item.badge}
+                  </span>
+                )}
+                {item.badgeText && (
+                  <span
+                    className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                  >
+                    {item.badgeText}
                   </span>
                 )}
               </button>
