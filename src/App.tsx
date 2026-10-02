@@ -14,7 +14,6 @@ import { MonorepoCodeBrowser } from './components/MonorepoCodeBrowser';
 import { DirectoryView } from './components/DirectoryView';
 import { AuditLogView } from './components/AuditLogView';
 import { DemoGuideModal } from './components/DemoGuideModal';
-import { TeamGuideView } from './components/TeamGuideView';
 
 export default function App() {
   const allUsers = db.getUsers();
@@ -188,8 +187,6 @@ export default function App() {
               />
             )
           )}
-
-          {currentTab === 'team_guide' && <TeamGuideView />}
 
           {currentTab === 'escalation_graph' && <EscalationGraphView />}
 

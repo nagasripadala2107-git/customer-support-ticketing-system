@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { User, NotificationItem } from '../types';
-import { Bell, CheckCircle2, BookOpen, RotateCcw, ShieldCheck, Menu, X, FileText } from 'lucide-react';
+import { Bell, CheckCircle2, BookOpen, RotateCcw, ShieldCheck, Menu, X } from 'lucide-react';
 
 interface TopNavProps {
   currentUser: User;
@@ -64,17 +64,6 @@ export const TopNav: React.FC<TopNavProps> = ({
 
       {/* Zone 2: Navigation / Quick Action Links */}
       <div className="hidden md:flex items-center gap-3 text-xs font-medium text-slate-600">
-        <a
-          href="/guide.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors font-medium shadow-2xs"
-          title="Open complete team guide as a PDF"
-        >
-          <FileText className="w-3.5 h-3.5 text-blue-600" />
-          <span>Team PDF Guide</span>
-        </a>
-
         <button
           onClick={onOpenDemoGuide}
           className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors"
